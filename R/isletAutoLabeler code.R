@@ -3,9 +3,6 @@
 #' Description: Automatically labels Alpha, Beta, Bihormonal, and Other cell clusters in a Seurat object using average marker expression.
 #' Example Usage: isletAutoLabeler(seurat_obj, assay = "RNA", cluster_col = "unintegrated_clusters", source = "SC")
 #'
-#' Author: Traye Lin
-#' Date: 2025-04-30
-#'
 #' @param seurat_obj A Seurat object to be labeled.
 #' @param assay The assay to use (default = "integrated")
 #' @param cluster_col Column in metadata to use for clustering (default = "seurat_clusters")
@@ -19,7 +16,7 @@ isletAutoLabeler <- function(seurat_obj, assay = "integrated",
   # Set prefix for cell type label
   prefix <- source
 
-  # Extract expression matrixs
+  # Extract expression matrices
   expr_matrix <- GetAssayData(seurat_obj, assay = assay, slot = "data")
 
   # Calculate global average expression for each marker
