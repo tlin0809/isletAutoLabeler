@@ -1,11 +1,11 @@
 Package: isletAutoLabeler
-Title: What the Package Does (One Line, Title Case)
+Title: Automatically Labels Islet Cell Types
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+     person(given = "Traye", family = "Lin", email = "tlin0809@gmail.com", role = c("aut", "cre"))
+Description: Automatically labels Alpha, Beta, Bihormonal, and Other cell clusters 
+    in a Seurat object using average marker expression.
+License: MIT
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
