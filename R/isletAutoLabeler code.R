@@ -1,6 +1,6 @@
 #' Auto-label islet cell types
 #'
-#' Description: Automatically labels Alpha, Beta, Bihormonal, and Other cell clusters in a Seurat object using average marker expression.
+#' Automatically labels Alpha, Beta, Bihormonal, and Other cell clusters in a Seurat object using average marker expression.
 #' Example Usage: isletAutoLabeler(seurat_obj, assay = "RNA", cluster_col = "unintegrated_clusters", source = "SC")
 #'
 #' @param seurat_obj A Seurat object to be labeled.
