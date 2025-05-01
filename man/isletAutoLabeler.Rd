@@ -24,10 +24,6 @@ isletAutoLabeler(
 Updated Seurat object with a new column named "CellType".
 }
 \description{
-Description: Automatically labels Alpha, Beta, Bihormonal, and Other cell clusters in a Seurat object using average marker expression.
+Automatically labels Alpha, Beta, Bihormonal, and Other cell clusters in a Seurat object using average marker expression.
 Example Usage: isletAutoLabeler(seurat_obj, assay = "RNA", cluster_col = "unintegrated_clusters", source = "SC")
-}
-\details{
-Author: Traye Lin
-Date: 2025-04-30
 }
