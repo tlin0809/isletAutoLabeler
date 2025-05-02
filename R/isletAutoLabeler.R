@@ -129,11 +129,13 @@ isletAutoLabeler <- function(seurat_obj, assay = "integrated",
       "Acinar" = "bisque2",
       "Endothelial" = "slategray3",
       "Mesenchymal" = "yellow",
-      "Immune" = "seagreen3"
+      "Immune" = "seagreen3",
+      "Other" = "gray"
     )
 
   plot <- DimPlot(seurat_obj, group.by = "CellType", label = TRUE, repel = TRUE, pt.size = 0.3, label.size = 5,
-                  cols = colors) + theme(legend.position = 'none') + ggtitle(paste(prefix, "-islet"))
+                  cols = colors) + theme(legend.position = 'none') + ggtitle(paste(prefix, "-islet", sep = "")) +
+    + theme(legend.text = element_text(size = 8), legend.title = element_text(size = 9), legend.key.size = unit(0.9, "lines"))
 
   return(list(object = seurat_obj, plot = plot))
   } else{
