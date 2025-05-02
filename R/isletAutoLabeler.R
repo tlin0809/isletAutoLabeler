@@ -5,7 +5,7 @@
 #' @param seurat_obj A Seurat object to be labeled.
 #' @param assay The assay to use (default = "integrated")
 #' @param cluster_col Column in metadata to use for clustering (default = "seurat_clusters")
-#' @param source Cell source, used as a prefix for the cell type label (e.g., "Human", "SC")
+#' @param source Cell source, used as a prefix for plot title (optional)
 #' @param plot Logical (default = FALSE). If TRUE, generates and returns a labeled UMAP plot using DimPlot. To set plot = TRUE, there must exists a dimentionality reduction named umap. If FALSE, only returns Seurat object.
 #' @return Updated Seurat object with a new column named "CellType", or Seurat object and labeled uMap if plot = TRUE.
 #' @export

@@ -27,5 +27,5 @@ isletAutoLabeler(
 Updated Seurat object with a new column named "CellType", or Seurat object and labeled uMap if plot = TRUE.
 }
 \description{
-Automatically labels Alpha, Beta, Bihormonal, and Other cell clusters in a Seurat object using average marker expression.
+Automatically labels Alpha, Beta, Bihormonal, Delta, PP, Duct, Acinar, Endothelial, Mesenchymal, Immune and Other cell clusters in a Seurat object using average marker expression.
 }
