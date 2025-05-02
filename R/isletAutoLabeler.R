@@ -1,6 +1,6 @@
 #' Auto-label islet cell types
 #'
-#' Automatically labels Alpha, Beta, Bihormonal, and Other cell clusters in a Seurat object using average marker expression.
+#' Automatically labels Alpha, Beta, Bihormonal, Delta, PP, Duct, Acinar, Endothelial, Mesenchymal, Immune and Other cell clusters in a Seurat object using average marker expression.
 #'
 #' @param seurat_obj A Seurat object to be labeled.
 #' @param assay The assay to use (default = "integrated")
