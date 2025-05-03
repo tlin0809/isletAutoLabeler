@@ -134,8 +134,12 @@ isletAutoLabeler <- function(seurat_obj, assay = "integrated",
     )
 
   plot <- DimPlot(seurat_obj, group.by = "CellType", label = TRUE, repel = TRUE, pt.size = 0.3, label.size = 5,
-                  cols = colors) + theme(legend.position = 'none') + ggtitle(paste(prefix, "-islet", sep = "")) +
-    + theme(legend.text = element_text(size = 8), legend.title = element_text(size = 9), legend.key.size = unit(0.9, "lines"))
+                  cols = colors) + theme(legend.position = 'none') +
+    theme(legend.position = 'none',
+          legend.text = element_text(size = 8),
+          legend.title = element_text(size = 9),
+          legend.key.size = unit(0.9, "lines")) +
+    ggtitle(paste(prefix, "-islet", sep = ""))
 
   return(list(object = seurat_obj, plot = plot))
   } else{
