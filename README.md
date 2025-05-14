@@ -1,3 +1,4 @@
+# One-line Labeling islet cell-types
 Automatically labels Alpha, Beta, Bihormonal, Delta, PP, Duct, Acinar, Endothelial, Mesenchymal, Immune, and Other cell clusters in a Seurat object using average marker expression. Provides a plotting option for quick visualization of the labeled uMap of the updated object. 
 
 
@@ -21,5 +22,9 @@ isletAutoLabeler(
           source = "Human",
           plot = FALSE
 )
+
+# Notes:
+Use isletAutoLabeler() after dimensionality reduction (e.g., PCA), clustering, and running RunUMAP(). 
+isletAutoLabeler() assumes the passed Seurat object is already in label-ready form.
 
 
