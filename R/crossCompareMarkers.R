@@ -1,35 +1,93 @@
-#' Cross compare marker gene lists from two comparision and identify promising markers
-#' @title crossCompareMarkers
-#' @description This function takes the output of two findMechanismMarkers() runs and identifies shared genes that are downregulated and strongly correlated in both comparisons.
+#' Cross compare marker gene lists across two comparisons
 #'
-#' @param result1 Output potential marker list from findMechanismMarkers() for comparison 1.
-#' @param result2 Output potnetial marker list from findMechanismMarkers() for comparison 2.
-#' @param marker_genes Character vector. Marker genes used in both comparisons.
-#' @param corr_threshold Numeric. Absolute R threshold for selecting strongly correlated genes. Default is 0.5.
+#' @title crossCompareMarkers
+#' @description Filters and cross-compares two sets of potential markers derived from findMechanismMarkers() and
+#' identifies potential markers with shared and significant directionality in expression across comparisons.
+#'
+#' @param result1_scg Output strongly-correlated gene list from findMechanismMarkers(), comparison 1 (specify raw or filtered).
+#' @param result2_scg Output strongly-correlated gene list from findMechanismMarkers(), comparison 2 (specify raw or filtered).
+#' @param deg_comp1 Data frame. Full DEG table from findMechanismMarkers(), comparison 1. Used to compare expression direction of genes from result2.
+#' @param deg_comp2 Data frame. Full DEG table from findMechanismMarkers(), comparison 2. Used to compare expression direction of genes from result1.
+#' @param direction_shared Character. Either "down" or "up" for filtering by shared expression pattern (default = down).
+#' @param logfc_threshold Numeric. Log2 fold change threshold for defining directionality (default = 0).
+#' @param sig_threshold Numeric. p-value threshold for keeping significant DEGs (default = 0.05).
+#'
 #' @return A list containing:
-#'   - potential_markers_1: character vector of candidate marker genes from comparison 1
-#'   - potential_markers_2: character vector of candidate marker genes from comparison 2
-#'   - shared_potential_markers: intersected genes from the two potential marker lists
+#'   - markers_1: character vector of candidate marker genes from comparison 1
+#'   - markers_2: character vector of candidate marker genes from comparison 2
+#'   - shared_markers: intersected genes from the two potential marker lists
+#'   - scg1_table: Data frame tracking filtering of comparison 1's SCGs through comp1 and comp2
+#'   - scg2_table: Data frame tracking filtering of comparison 2's SCGs through comp2 and comp1
 #' @export
-crossCompareMarkers <- function(result1, result2, marker_genes, corr_threshold = 0.5) {
-  # Extract gene names strongly correlated with each marker
-  strong_1 <- unique(unlist(result1$strongly_correlated_genes[marker_genes]))
-  strong_2 <- unique(unlist(result2$strongly_correlated_genes[marker_genes]))
 
-  # Extract gene names that are in the downregulated DEGs
-  de_genes_1 <- rownames(subset(result1$top_markers, avg_log2FC < 0))
-  de_genes_2 <- rownames(subset(result2$top_markers, avg_log2FC < 0))
+crossCompareMarkers <- function(
+    result1_scg,
+    result2_scg,
+    deg_comp1,
+    deg_comp2,
+    direction_shared = "down",
+    logfc_threshold = 0,
+    sig_threshold = 0.05
+) {
+  # Extract strongly correlated gene lists
+  scg1 <- unique(unlist(result1_scg))
+  scg2 <- unique(unlist(result2_scg))
 
-  # Get genes that are both strongly correlated AND downregulated
-  potential_markers_1 <- intersect(strong_1, de_genes_1)
-  potential_markers_2 <- intersect(strong_2, de_genes_2)
+  # Confirm scg1 expression in comparison 1
+  scg1_comp1 <- deg_comp1[rownames(deg_comp1) %in% scg1, ]
+  if (direction_shared == "down") {
+    scg1_comp1 <- subset(scg1_comp1, avg_log2FC < logfc_threshold & p_val < sig_threshold)
+  } else if (direction_shared == "up") {
+    scg1_comp1 <- subset(scg1_comp1, avg_log2FC > logfc_threshold & p_val < sig_threshold)
+  }
 
-  # Intersect both sets to get shared potential markers
+  # Then check scg1_comp1 expression in comparison 2
+  scg1_comp2 <- deg_comp2[rownames(deg_comp2) %in% rownames(scg1_comp1), ]
+  if (direction_shared == "down") {
+    scg1_comp2 <- subset(scg1_comp2, avg_log2FC < logfc_threshold & p_val < sig_threshold)
+  } else if (direction_shared == "up") {
+    scg1_comp2 <- subset(scg1_comp2, avg_log2FC > logfc_threshold & p_val < sig_threshold)
+  }
+  potential_markers_1 <- rownames(scg1_comp2)
+
+  # Confirm scg2 expression in comparison 2
+  scg2_comp2 <- deg_comp2[rownames(deg_comp2) %in% scg2, ]
+  if (direction_shared == "down") {
+    scg2_comp2 <- subset(scg2_comp2, avg_log2FC < logfc_threshold & p_val < sig_threshold)
+  } else if (direction_shared == "up") {
+    scg2_comp2 <- subset(scg2_comp2, avg_log2FC > logfc_threshold & p_val < sig_threshold)
+  }
+
+  # Then check scg2_comp2 expression in comparison 1
+  scg2_comp1 <- deg_comp1[rownames(deg_comp1) %in% rownames(scg2_comp2), ]
+  if (direction_shared == "down") {
+    scg2_comp1 <- subset(scg2_comp1, avg_log2FC < logfc_threshold & p_val < sig_threshold)
+  } else if (direction_shared == "up") {
+    scg2_comp1 <- subset(scg2_comp1, avg_log2FC > logfc_threshold & p_val < sig_threshold)
+  }
+  potential_markers_2 <- rownames(scg2_comp1)
+
+  # Find shared markers
   shared_potential_markers <- intersect(potential_markers_1, potential_markers_2)
 
+  # Summary tables for tracing filtering steps
+  scg1_table <- data.frame(
+    orig_scg1 = scg1,
+    retained_in_comp1 = scg1 %in% rownames(scg1_comp1),
+    retained_in_comp2 = scg1 %in% rownames(scg1_comp2)
+  )
+
+  scg2_table <- data.frame(
+    orig_scg2 = scg2,
+    retained_in_comp2 = scg2 %in% rownames(scg2_comp2),
+    retained_in_comp1 = scg2 %in% rownames(scg2_comp1)
+  )
+
   return(list(
-    potential_markers_1 = potential_markers_1,
-    potential_markers_2 = potential_markers_2,
-    shared_potential_markers = shared_potential_markers
+    markers_1 = potential_markers_1,
+    markers_2 = potential_markers_2,
+    shared_markers = shared_potential_markers,
+    scg1_table = scg1_table,
+    scg2_table = scg2_table
   ))
 }
