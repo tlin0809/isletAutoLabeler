@@ -28,12 +28,13 @@ library(isletAutoLabeler)
 ?isletAutoLabeler
 ```
 
-## Function Overview  
+# Function Overview  
 
-# isletAutoLabeler()
+## isletAutoLabeler()
 Automatically labels major islet cell types (Alpha, Beta, Bihormonal, Delta, PP, 
 Duct, Acinar, Endothelial, Mesenchymal, Immune, and Other) in a Seurat object 
 based on average marker gene expression. 
+
 Optionally generates a UMAP plot of labeled clusters.
 
 ```r
@@ -46,14 +47,16 @@ isletAutoLabeler(
 )
 ```
 Outputs include: 
-Updated Seurat object with added "CellType" column and labeled UMAP if plot = "TRUE"
+- Updated Seurat object with added "CellType" column
+- Labeled UMAP if plot = "TRUE"
 
-# findMechanismMarkers()
+## findMechanismMarkers()
 Identifies candidate marker genes for a user-defined cellular mechanism (e.g., 
 maturation, proliferation) by integrating differential expression (DE) and Pearson
 correlation coefficient (PCC) analysis.
 Genes are correlated with user-specified marker genes to identify candidates that
 are both statistically and biologically relevant.
+
 To run subsequent cross-comparision analysis, run findMechanismMarkers() twice 
 with separate population groups.
 ```r
@@ -71,17 +74,17 @@ result <- findMechanismMarkers(
 )
 ```
 Outputs include: 
-Volcano plot of DEGs
+- Volcano plot of DEGs
 
-Filtered and unfiltered DEGs
+- Filtered and unfiltered DEGs
 
-PCC matrices
+- PCC matrices
 
-Lists of strongly correlated genes
+- Lists of strongly correlated genes
 
-Correlation tables (raw and filtered)
+- Correlation tables (raw and filtered)
 
-# crossCompareMarkers()
+## crossCompareMarkers()
 Cross-compares the outputs from multiple findMechanismMarkers() calls to identify
 marker genes consistently regulated across two developmental stages or treatment conditions.
 
@@ -99,13 +102,13 @@ cross_results <- crossCompareMarkers(
 ```
 Outputs include:
 
-Marker gene list from comparison 1
+- Marker gene list from comparison 1
 
-Marker gene list from comparison 2
+- Marker gene list from comparison 2
 
-Intersected gene list between marker gene list 1 and marker gene list 2
+- Intersected gene list between marker gene list 1 and marker gene list 2
 
-## Example Workflow 
+# Example Workflow 
 ```r
 # Step 1: Annotate cell types
 seurat_obj <- isletAutoLabeler(seurat_obj)
@@ -122,14 +125,14 @@ cross_results <- crossCompareMarkers(
 )
 ```
 
-## Complete Example
+# Complete Example
 
-# Load the package
+## Load the package
 ```r
 library(isletToolkit)
 ```
 
-# Step 1: Annotate cell types
+## Step 1: Annotate cell types
 ```r
 seurat_obj <- isletAutoLabeler(
   seurat_obj,
@@ -140,7 +143,7 @@ seurat_obj <- isletAutoLabeler(
 )
 ```
 
-# Step 2: Run mechanism marker discovery on two (or more) comparisons
+## Step 2: Run mechanism marker discovery on two (or more) comparisons
 ```r
 res1 <- findMechanismMarkers(
   seurat_obj,
@@ -170,7 +173,7 @@ res2 <- findMechanismMarkers(
 )
 ```
 
-# Step 3: Cross-compare markers from two developmental transitions
+## Step 3: Cross-compare markers from two developmental transitions
 ```r
 cross_results <- crossCompareMarkers(
   result1 = res1$strongly_correlated_genes_filtered,
