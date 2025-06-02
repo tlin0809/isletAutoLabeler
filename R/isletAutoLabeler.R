@@ -1,4 +1,5 @@
 #' Auto-label islet cell types
+#'
 #' @title findMechanismMarkers
 #' @description Automatically labels Alpha, Beta, Bihormonal, Delta, PP, Duct, Acinar, Endothelial, Mesenchymal, Immune and Other cell clusters in a Seurat object using average marker expression.
 #'
@@ -8,6 +9,7 @@
 #' @param source Cell source, used as a prefix for plot title (optional).
 #' @param plot Logical (default = FALSE). If TRUE, generates and returns a labeled UMAP plot using DimPlot. To set plot = TRUE, there must exists a dimentionality reduction named umap. If FALSE, only returns Seurat object.
 #' @return Updated Seurat object with a new column named "CellType", or Seurat object and labeled uMap if plot = TRUE.
+#'
 #' @export
 
 isletAutoLabeler <- function(seurat_obj, assay = "integrated",
