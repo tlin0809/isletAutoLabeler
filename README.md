@@ -1,6 +1,7 @@
 # isletToolkit
 
-`isletToolkit` is a modular R package designed for the single-cell RNA-seq analysis of pancreatic islet cells.  
+`isletToolkit` is a R package designed for the single-cell RNA-seq analysis of pancreatic islet cells.  
+
 It provides tools for:
 
 - Automated cell type labeling using average marker gene expression
@@ -19,13 +20,18 @@ remotes::install_github("tlin0809/isletToolkit")
 
 ## Loading Package and Help Page
 ```r
-# Load isletAutoLabeler: 
-library(isletAutoLabeler)
+# Load isletToolkit: 
+library(isletToolkit)
 ```
 
 ```r
 # Load help page: 
-?isletAutoLabeler
+?isletToolkit
+```
+
+```r
+# Unload isletToolkit (if needed)
+detach("package:isletToolkit", unload = TRUE, character.only = TRUE)
 ```
 
 # Function Overview  
@@ -47,8 +53,9 @@ isletAutoLabeler(
 )
 ```
 Outputs include: 
-- Updated Seurat object with added "CellType" column
-- Labeled UMAP if plot = "TRUE"
+- Updated Seurat object with added "CellType" column: `seurat_obj$CellType`, or 
+`seurat_obj$object$CellType` if plot = "TRUE"
+- Labeled UMAP: `seurat_obj$plot` if plot = "TRUE"
 
 ## findMechanismMarkers()
 Identifies candidate marker genes for a user-defined cellular mechanism (e.g., 
@@ -56,6 +63,12 @@ maturation, proliferation) by integrating differential expression (DE) and Pears
 correlation coefficient (PCC) analysis.
 Genes are correlated with user-specified marker genes to identify candidates that
 are both statistically and biologically relevant.
+
+Two strategies are used to calculate PCCs:
+- Raw correlation: all cells are used
+
+- Filtered correlation: only cells co-expressing both genes in each pair are 
+used to enhance correlation
 
 To run subsequent cross-comparision analysis, run `findMechanismMarkers()` twice 
 with separate population groups.
@@ -74,22 +87,28 @@ result <- findMechanismMarkers(
 )
 ```
 Outputs include: 
-- Volcano plot of DEGs
+- Volcano plot of DEGs: `volcano_plot`
 
-- Filtered and unfiltered DEGs
+- Top DEGs used for volcano plot: `top_DEGs`
 
-- PCC matrices
+- Filtered top DEGs used for PCC analysis: `top_DEGs_filtered`
 
-- Lists of strongly correlated genes
+- PCC matrices (raw and filtered): `cor_matrix_raw`, `cor_matrix_filtered`
 
-- Correlation tables (raw and filtered)
+- Lists of strongly correlated genes (raw and filtered): `strongly_correlated_genes`, `strongly_correlated_genes_filtered`
+
+- R values per marker tables (raw and filtered): `markerwise_correlation_tables_raw`, `markerwise_correlation_tables_filtered`
+
+- Correlation tables (raw and filtered): `combined_table_raw`, `combined_table_filtered`
 
 ## crossCompareMarkers()
 Cross-compares the outputs from multiple `findMechanismMarkers()` calls to identify
 marker genes consistently regulated across two developmental stages or treatment conditions.
 
-This function increases biological confidence by ensuring that selected genes 
-follow a consistent trend. For example, a maturation marker should show increasing
+This function improve biological confidence by ensuring that selected genes 
+follow a consistent expression trend across population. It selects promising genes 
+by filtering for direction and statistical significance across comparisons. For example, 
+an alpha-cell maturation marker should show increasing
 expression from SC-bihormonal to SC-alpha to Human-alpha.
 ```r
 cross_results <- crossCompareMarkers(
@@ -102,11 +121,11 @@ cross_results <- crossCompareMarkers(
 ```
 Outputs include:
 
-- Marker gene list from comparison 1
+- Candidate marker genes from comparison 1: `potential_markers_1`
 
-- Marker gene list from comparison 2
+- candidate marker genes from comparison 2: `potential_markers_2`
 
-- Intersected gene list between marker gene list 1 and marker gene list 2
+- Intersected gene list between candidate marker gene list 1 and 2: `shared_potential_markers`
 
 # Example Workflow 
 ```r
@@ -189,9 +208,9 @@ cross_results <- crossCompareMarkers(
 ## Notes
 
 - Use `isletAutoLabeler()` after dimensionality reduction (e.g., PCA), clustering, and running `RunUMAP()` on your Seurat object.
-- The function assumes the object is label-ready and uses default human markers unless specified otherwise.
-- The output of `findMechanismMarkers()` includes volcano plots, DEGs, correlation matrices, and filtered lists of strongly correlated candidate markers.
-- `crossCompareMarkers()` helps reinforce biological relevance by filtering for direction and statistical significance across comparisons.
+- The `findMechanismMarkers()`  function assumes the input object is label-ready and requires user input of marker genes for PCC analysis. 
+- The `crossCompareMarkers()` function uses results from `findMechanismMarkers()` and requires 2 result variables as input. 
+
 
 ## License
 
