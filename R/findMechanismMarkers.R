@@ -1,4 +1,5 @@
 #' Find potential markers using DE and PCC analysis
+#'
 #' @title findMechanismMarkers
 #' @description Performs differential expression (DE) and Pearson correlation coefficient (PCC) analysis to identify potential marker genes associated with a user-defined cellular mechanism (e.g., maturation, proliferation) across two populations.
 #'
@@ -12,6 +13,7 @@
 #' @param pval.threshold Numeric. p-value threshold for DE filtering (default = 0.05).
 #' @param marker_genes Character vector. Marker genes to calculate PCC against (input required).
 #' @param corr_threshold Numeric. Absolute R threshold for selecting strongly correlated genes (default = 0.5).
+#'
 #' @return A list containing:
 #'   - full_DEGs: full DEGs from DE analysis
 #'   - top_DEGs: DEGs used for volcano plot (not filtered by direction)
@@ -25,7 +27,9 @@
 #'   - combined_table_raw: gene-wise PCC with all marker genes (raw)
 #'   - markerwise_correlation_tables_filtered: correlation tables per marker
 #'   - combined_table_filtered: gene-wise PCC with all marker genes
+#'
 #' @import Seurat, ggplot2, pheatmap
+#'
 #' @export
 
 findMechanismMarkers <- function(
