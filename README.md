@@ -1,6 +1,6 @@
 # isletToolkit
 
-`isletToolkit` is a R package designed for the single-cell RNA-seq analysis of pancreatic islet cells.  
+`isletToolkit` is an R package designed for the single-cell RNA-seq analysis of pancreatic islet cells.  
 
 It provides tools for:
 
@@ -105,7 +105,7 @@ Outputs include:
 Cross-compares the outputs from multiple `findMechanismMarkers()` calls to identify
 marker genes consistently regulated across two developmental stages or treatment conditions.
 
-This function improve biological confidence by ensuring that selected genes 
+This function improves biological confidence by ensuring that selected genes 
 follow a consistent expression trend across population. It selects promising genes 
 by filtering for direction and statistical significance across comparisons. For example, 
 an alpha-cell maturation marker should show increasing
@@ -207,9 +207,9 @@ cross_results <- crossCompareMarkers(
 
 ## Notes
 
-- Use `isletAutoLabeler()` after dimensionality reduction (e.g., PCA), clustering, and running `RunUMAP()` on your Seurat object.
-- The `findMechanismMarkers()`  function assumes the input object is label-ready and requires user input of marker genes for PCC analysis. 
-- The `crossCompareMarkers()` function uses results from `findMechanismMarkers()` and requires 2 result variables as input. 
+- Use `isletAutoLabeler()` after dimensionality reduction (e.g., PCA), clustering, and running `RunUMAP()` on your Seurat object
+- The `findMechanismMarkers()`  function assumes the input object is label-ready and requires user input of marker genes for PCC analysis 
+- The `crossCompareMarkers()` function uses results from `findMechanismMarkers()` and requires 2 result variables as input 
 
 
 ## License
