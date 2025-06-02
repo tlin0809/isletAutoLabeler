@@ -4,8 +4,8 @@
 
 It provides tools for:
 
-- Automated cell type labeling using average marker gene expression
-- Identification of potential mechanism-associated marker genes (e.g., maturation, proliferation) through differential expression and correlation analysis
+- Quantitative cell type annotation using average marker gene expression method
+- Identification of potential mechanism-associated marker genes through differential expression and correlation analysis
 - Cross-comparison of marker genes across developmental or experimental conditions to discover promising machanism-associated markers
 
 ## Installation
@@ -61,6 +61,9 @@ Outputs include:
 Identifies candidate marker genes for a user-defined cellular mechanism (e.g., 
 maturation, proliferation) by integrating differential expression (DE) and Pearson
 correlation coefficient (PCC) analysis.
+
+Visualizes top DE genes with volcano plot. 
+
 Genes are correlated with user-specified marker genes to identify candidates that
 are both statistically and biologically relevant.
 
@@ -69,6 +72,8 @@ Two strategies are used to calculate PCCs:
 
 - Filtered correlation: only cells co-expressing both genes in each pair are 
 used to enhance correlation
+
+Output DEGs and strongly correlated gene lists can be readily used for downstream analyses.
 
 To run subsequent cross-comparision analysis, run `findMechanismMarkers()` twice 
 with separate population groups.
