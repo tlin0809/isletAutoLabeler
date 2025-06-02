@@ -57,7 +57,7 @@ correlation coefficient (PCC) analysis.
 Genes are correlated with user-specified marker genes to identify candidates that
 are both statistically and biologically relevant.
 
-To run subsequent cross-comparision analysis, run findMechanismMarkers() twice 
+To run subsequent cross-comparision analysis, run `findMechanismMarkers()` twice 
 with separate population groups.
 ```r
 result <- findMechanismMarkers(
@@ -85,7 +85,7 @@ Outputs include:
 - Correlation tables (raw and filtered)
 
 ## crossCompareMarkers()
-Cross-compares the outputs from multiple findMechanismMarkers() calls to identify
+Cross-compares the outputs from multiple `findMechanismMarkers()` calls to identify
 marker genes consistently regulated across two developmental stages or treatment conditions.
 
 This function increases biological confidence by ensuring that selected genes 
@@ -119,9 +119,11 @@ res2 <- findMechanismMarkers(seurat_obj, ident.1 = "SC-alpha", ident.2 = "Human-
 
 # Step 3: Cross-compare markers from two developmental transitions
 cross_results <- crossCompareMarkers(
-  res1$strongly_correlated_genes_filtered,
-  res2$strongly_correlated_genes_filtered,
-  direction = "down"
+  result1 = res1$strongly_correlated_genes_filtered,
+  result2 =res2$strongly_correlated_genes_filtered,
+  marker_genes = c("ARX", "GCG", "TTR", "FOX2", "MAFB"),
+  direction_shared = "down",
+  corr_threshold = 0.5
 )
 ```
 
