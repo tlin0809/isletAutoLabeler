@@ -13,6 +13,7 @@
 #' @param marker_genes Character vector. Marker genes to calculate PCC against (input required).
 #' @param corr_threshold Numeric. Absolute R threshold for selecting strongly correlated genes (default = 0.5).
 #' @return A list containing:
+#'   - full_DEGs: full DEGs from DE analysis
 #'   - top_DEGs: DEGs used for volcano plot (not filtered by direction)
 #'   - top_DEGs_filtered: DEGs used for PCC (filtered by direction and LogFC thresholds)
 #'   - volcano_plot: ggplot object of volcano plot
@@ -114,6 +115,7 @@ findMechanismMarkers <- function(
   combined_table <- Reduce(function(x, y) merge(x, y, by = "Gene", all = TRUE), valid_tables_filtered)
 
   return(list(
+    full_DEGs = DEG_full,
     top_DEGs = volcano_genes,
     top_DEGs_filtered = DEG_filtered,
     volcano_plot = volcano_plot,
