@@ -1,10 +1,12 @@
-Package: isletAutoLabeler
-Title: Automatically Labels Islet Cell Types
-Version: 0.0.0.9000
+Package: isletToolkit
+Title: Toolkit for Quantitative Cell Type Annotation and  Marker Discovery in islet cells
+Version: 0.1.0
 Authors@R: 
      person(given = "Traye", family = "Lin", email = "tlin0809@gmail.com", role = c("aut", "cre"))
-Description: Automatically labels Alpha, Beta, Bihormonal, and Other cell clusters 
-    in a Seurat object using average marker expression.
+Description: A modular R toolkit designed to assist in single-cell RNA-seq analysis of pancreatic islet cells.
+    Provides functions for quantitative cell type labeling, differential expression, 
+    Pearson correlation analysis, and cross-comparison of marker genes. Helps discover candidate regulators 
+    of cellular mechanisms of interest.
 License: MIT
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

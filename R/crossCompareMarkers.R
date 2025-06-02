@@ -1,7 +1,9 @@
+#' Cross compare marker gene lists from two comparision and identify promising markers
 #' @title crossCompareMarkers
 #' @description This function takes the output of two findMechanismMarkers() runs and identifies shared genes that are downregulated and strongly correlated in both comparisons.
-#' @param result1 Output list from findMechanismMarkers() for comparison 1.
-#' @param result2 Output list from findMechanismMarkers() for comparison 2.
+#'
+#' @param result1 Output potential marker list from findMechanismMarkers() for comparison 1.
+#' @param result2 Output potnetial marker list from findMechanismMarkers() for comparison 2.
 #' @param marker_genes Character vector. Marker genes used in both comparisons.
 #' @param corr_threshold Numeric. Absolute R threshold for selecting strongly correlated genes. Default is 0.5.
 #' @return A list containing:

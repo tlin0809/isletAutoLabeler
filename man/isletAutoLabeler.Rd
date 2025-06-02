@@ -2,7 +2,7 @@
 % Please edit documentation in R/isletAutoLabeler.R
 \name{isletAutoLabeler}
 \alias{isletAutoLabeler}
-\title{Auto-label islet cell types}
+\title{findMechanismMarkers}
 \usage{
 isletAutoLabeler(
   seurat_obj,
@@ -15,11 +15,11 @@ isletAutoLabeler(
 \arguments{
 \item{seurat_obj}{A Seurat object to be labeled.}
 
-\item{assay}{The assay to use (default = "integrated")}
+\item{assay}{The assay to use (default = "integrated").}
 
-\item{cluster_col}{Column in metadata to use for clustering (default = "seurat_clusters")}
+\item{cluster_col}{Column in metadata to use for clustering (default = "seurat_clusters").}
 
-\item{source}{Cell source, used as a prefix for the cell type label (e.g., "Human", "SC")}
+\item{source}{Cell source, used as a prefix for plot title (optional).}
 
 \item{plot}{Logical (default = FALSE). If TRUE, generates and returns a labeled UMAP plot using DimPlot. To set plot = TRUE, there must exists a dimentionality reduction named umap. If FALSE, only returns Seurat object.}
 }
@@ -28,4 +28,7 @@ Updated Seurat object with a new column named "CellType", or Seurat object and l
 }
 \description{
 Automatically labels Alpha, Beta, Bihormonal, Delta, PP, Duct, Acinar, Endothelial, Mesenchymal, Immune and Other cell clusters in a Seurat object using average marker expression.
+}
+\details{
+Auto-label islet cell types
 }

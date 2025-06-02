@@ -1,6 +1,7 @@
 #' Find potential markers using DE and PCC analysis
 #' @title findMechanismMarkers
 #' @description Performs differential expression (DE) and Pearson correlation coefficient (PCC) analysis to identify potential marker genes associated with a user-defined cellular mechanism (e.g., maturation, proliferation) across two populations.
+#'
 #' @param seurat_obj A labeled Seurat object. The Seurat object returned from isletAutoLabeler() is ready for use.
 #' @param ident.1 Character. Cell identity label for population 1.
 #' @param ident.2 Character. Cell identity label for population 2.
