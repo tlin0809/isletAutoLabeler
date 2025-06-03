@@ -3,3 +3,5 @@
 export(crossCompareMarkers)
 export(findMechanismMarkers)
 export(isletAutoLabeler)
+import(Seurat)
+import(ggplot2)
