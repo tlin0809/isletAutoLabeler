@@ -28,6 +28,9 @@
 #'   - markerwise_correlation_tables_filtered: correlation tables per marker
 #'   - combined_table_filtered: gene-wise PCC with all marker genes
 #'
+#' @import Seurat
+#' @import ggplot2
+#'
 #' @export
 
 findMechanismMarkers <- function(
